@@ -43,19 +43,4 @@ public class PostController : ControllerBase
 
         return Ok(response);
     }
-
-   /* [HttpPut("{id}")]
-    //[Authorize(Policy = "EditProfile")]
-    public async Task<ActionResult<Student>> UpdateStudent(int id, [FromBody] UpdateStudentRequest student)
-    {
-        await _service.UpdateStudent(id, student);
-        return NoContent();
-    }
-    [HttpDelete("{id}")]
-    //[Authorize(Policy = "EditProfile")]
-    public async Task<ActionResult<Student>> ExcludeStudent(int id)
-    {
-        await _service.DeleteStudent(id);
-        return NoContent();
-    }*/
 }
