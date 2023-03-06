@@ -2,4 +2,4 @@
 
 Projeto de conclusão de Aceleração Voalle em C#
 
-Grupo: Felipe Rangel Bezerra e Gabriel Dias
+Grupo: Felipe Rangel Bezerra
