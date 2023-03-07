@@ -42,7 +42,7 @@ public class TryitterRepository<T> : ITryitterRepository<T> where T : class {
 
     public virtual async Task<User?> GetByNameOrEmail(string value)
     {
-        return await _context.Set<User>().FirstOrDefaultAsync(s => s.Email == value || s.UserName == value);
+        return await _context.Set<User>().FirstOrDefaultAsync(s => s.Email == value || s.Username == value);
     }
 
 }

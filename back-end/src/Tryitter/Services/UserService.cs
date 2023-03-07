@@ -14,7 +14,7 @@ public class UserService {
         var user = new User {
             Email = userRequest.Email,
             Password = userRequest.Password,
-            UserName = userRequest.UserName,
+            Username = userRequest.Username,
             Status = userRequest.Status,
         };
 
@@ -34,7 +34,7 @@ public class UserService {
 
         var serializedUsers = users.Select(s => new User {
             UserId = s.UserId,
-            UserName = s.UserName,
+            Username = s.Username,
             Email = s.Email,
             Status = s.Status,
         });
@@ -61,8 +61,8 @@ public class UserService {
         if (user == null)
             throw new UserNotFound($"There is no user with id {id}");
         
-        if (userUpdate.UserName != null)
-            user.UserName = userUpdate.UserName;
+        if (userUpdate.Username != null)
+            user.Username = userUpdate.Username;
         if (userUpdate.Status != null)
             user.Status = userUpdate.Status;
         if (userUpdate.Password != null)

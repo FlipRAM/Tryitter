@@ -21,12 +21,12 @@ public class PostService {
         return post;
     }
 
-    public async Task<IEnumerable<Post>> GetAllByUsername(string UserName)
+    public async Task<IEnumerable<Post>> GetAllByUsername(string username)
     {
-        var users = await _repository.GetByNameOrEmail(UserName)!;
+        var users = await _repository.GetByNameOrEmail(username)!;
 
         if (users == null)
-            throw new UserNotFound($"There is no user {UserName}");
+            throw new UserNotFound($"There is no user {username}");
 
         var userPosts = await _repository.GetAllById(users.UserId);
 
