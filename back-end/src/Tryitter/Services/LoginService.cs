@@ -2,28 +2,28 @@ using SchoolLogin.Services;
 
 public class LoginService {
 
-    private readonly ITryitterRepository<Student> _repository;
+    private readonly ITryitterRepository<User> _repository;
     private readonly ILogger<LoginService> _logger;
 
-    public LoginService(ITryitterRepository<Student> repository,
+    public LoginService(ITryitterRepository<User> repository,
         ILogger<LoginService> logger)
     {
         _repository = repository;
         _logger = logger;
     }
 
-    public async Task<string> LoginStudent(LoginRequest login){
+    public async Task<string> LoginUser(LoginRequest login){
 
-        var student = await _repository.GetByNameOrEmail(login.Email)!;
+        var user = await _repository.GetByNameOrEmail(login.Email)!;
         
-        if (student == null)
-            throw new StudentNotFound("Estudante não encontrado ao efetuar login");
+        if (user == null)
+            throw new UserNotFound("User not found to log in");
 
-        if (student.Password != login.Password)
-            throw new IncorrectPassword("Senha de estudante incorreta");
+        if (user.Password != login.Password)
+            throw new IncorrectPassword("Incorrect Password");
             
-        student.Password = String.Empty;
+        user.Password = String.Empty;
 
-        return new TokenGenerator().Generate(student);
+        return new TokenGenerator().Generate(user);
     }
 }

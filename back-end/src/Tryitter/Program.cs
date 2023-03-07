@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<TryitterContext>();
 builder.Services.AddScoped(typeof(ITryitterRepository<>), typeof(TryitterRepository<>));
 builder.Services.AddScoped<LoginService>();
-builder.Services.AddScoped<StudentService>();
+builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<PostService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -49,17 +49,17 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("EditProfile", policy =>
         policy.RequireAssertion(context =>
         {
-            var student = context.User.FindFirst("StudentId");
-            if (student == null)
+            var user = context.User.FindFirst("UserId");
+            if (user == null)
             {
-                throw new ArgumentException("Student é nulo");
+                throw new ArgumentException("User is null");
             }
-            int.TryParse(student.Value, out int studentId);
+            int.TryParse(user.Value, out int userId);
 
             var httpContext = context.Resource as HttpContext;
             var routeData = httpContext!.GetRouteData();
             int.TryParse(routeData.Values["id"].ToString(), out int currentId);
-            return studentId == currentId;
+            return userId == currentId;
         }));   
 });
 

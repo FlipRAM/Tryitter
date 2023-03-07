@@ -16,10 +16,10 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<string>> Login([FromBody] LoginRequest student)
+    public async Task<ActionResult<string>> Login([FromBody] LoginRequest user)
     {
-        var token = await _service.LoginStudent(student);
-        _logger.LogInformation(student.ToString());
+        var token = await _service.LoginUser(user);
+        _logger.LogInformation(user.ToString());
         return Ok(token);
     }
 }

@@ -7,13 +7,13 @@ namespace SchoolLogin.Services
 {
     public class TokenGenerator
     {
-        public string Generate(Student student)
+        public string Generate(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
-                Subject = AddClaims(student),
+                Subject = AddClaims(user),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET")!)),
                     SecurityAlgorithms.HmacSha256Signature
@@ -26,11 +26,11 @@ namespace SchoolLogin.Services
             return tokenHandler.WriteToken(token);
         }
 
-        private ClaimsIdentity AddClaims(Student student) 
+        private ClaimsIdentity AddClaims(User user) 
         {
             var claims = new ClaimsIdentity();
 
-            claims.AddClaim(new Claim("StudentId", student.StudentId.ToString()));
+            claims.AddClaim(new Claim("UserId", user.UserId.ToString()));
             return claims;
         }
     }

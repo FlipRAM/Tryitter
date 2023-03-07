@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class TryitterContext : DbContext
 {
-    public DbSet<Student> Students { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<Post> Posts { get; set; } 
 
     public TryitterContext(DbContextOptions<TryitterContext> options) : base(options){ }
@@ -20,8 +20,8 @@ public class TryitterContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Post>().HasOne(p => p.Student)
-            .WithMany(s => s.Posts).HasForeignKey(p => p.StudentId);
+        modelBuilder.Entity<Post>().HasOne(p => p.User)
+            .WithMany(s => s.Posts).HasForeignKey(p => p.UserId);
     }
 
 }

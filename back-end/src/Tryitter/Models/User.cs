@@ -1,16 +1,16 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Student 
+public class User 
 {
     [Key]
-    public int StudentId { get; set; }
-    public string StudentName { get; set; }
+    public int UserId { get; set; }
+    public string UserName { get; set; }
     public string Email { get; set; }
-    public Modules CurrentModule { get; set; }
     public string Status { get; set; }
     public string Password { get; set; }
-    [InverseProperty("Student")]
+
+    [InverseProperty("User")]
     public virtual ICollection<Post>? Posts { get; set; }
 
 }

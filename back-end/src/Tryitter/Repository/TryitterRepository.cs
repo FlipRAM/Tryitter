@@ -37,12 +37,12 @@ public class TryitterRepository<T> : ITryitterRepository<T> where T : class {
 
     public virtual async Task<IEnumerable<Post>> GetAllById(int id)
     {
-        return await _context.Set<Post>().Include(p => p.Student).Where(p => p.StudentId == id).ToListAsync();
+        return await _context.Set<Post>().Include(p => p.User).Where(p => p.UserId == id).ToListAsync();
     }
 
-    public virtual async Task<Student?> GetByNameOrEmail(string value)
+    public virtual async Task<User?> GetByNameOrEmail(string value)
     {
-        return await _context.Set<Student>().FirstOrDefaultAsync(s => s.Email == value || s.StudentName == value);
+        return await _context.Set<User>().FirstOrDefaultAsync(s => s.Email == value || s.UserName == value);
     }
 
 }

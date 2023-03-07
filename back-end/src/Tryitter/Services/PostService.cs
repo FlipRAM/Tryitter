@@ -1,8 +1,8 @@
 public class PostService {
-    private readonly ITryitterRepository<Student> _repository;
+    private readonly ITryitterRepository<User> _repository;
     private readonly ILogger<PostService> _logger;
 
-    public PostService(ITryitterRepository<Student> repository,
+    public PostService(ITryitterRepository<User> repository,
         ILogger<PostService> logger)
     {
         _repository = repository;
@@ -13,9 +13,7 @@ public class PostService {
     {
         var post = new Post {
             Content = postRequest.Content,
-            Student = postRequest.Student,
-            ImageData = postRequest.ImageData,
-            ImageMime = postRequest.ImageMime,
+            UserId = postRequest.UserId,
         };
 
         await _repository.Add(post);
@@ -23,19 +21,19 @@ public class PostService {
         return post;
     }
 
-    public async Task<IEnumerable<Post>> GetAllByStudentName(string StudentName)
+    public async Task<IEnumerable<Post>> GetAllByUsername(string UserName)
     {
-        var students = await _repository.GetByNameOrEmail(StudentName)!;
+        var users = await _repository.GetByNameOrEmail(UserName)!;
 
-        if (students == null)
-            throw new StudentNotFound($"Não há aluno cadastrado com nome {StudentName}");
+        if (users == null)
+            throw new UserNotFound($"There is no user {UserName}");
 
-        var studentPosts = await _repository.GetAllById(students.StudentId);
+        var userPosts = await _repository.GetAllById(users.UserId);
 
-        if (studentPosts == null)
-            throw new NoContent("Não há posts deste estudante");
+        if (userPosts == null)
+            throw new NoContent("There is no posts from this user");
         
-        return studentPosts;
+        return userPosts;
     }
 
     public async Task<Post> GetById(int id)
@@ -43,37 +41,31 @@ public class PostService {
         var post = await _repository.GetById<Post>(id);
 
         if (post == null)
-            throw new StudentNotFound($"Não há post com o id {id}");
+            throw new UserNotFound($"There is no posts with id {id}");
         
         return post;
     }
 
-    public async Task UpdateStudent(int id, UpdateStudentRequest studentupdate)
+    public async Task UpdatePost(int id, PostRequest postUpdate)
     {
-        var student = await _repository.GetById<Student>(id);
+        var post = await _repository.GetById<Post>(id);
 
-        if (student == null)
-            throw new StudentNotFound($"Não há aluno com o id {id}");
+        if (post == null)
+            throw new PostNotFound($"There is no post with id {id}");
         
-        if (studentupdate.StudentName != null)
-            student.StudentName = studentupdate.StudentName;
-        if (studentupdate.Status != null)
-            student.Status = studentupdate.Status;
-        if (studentupdate.CurrentModule != null)
-            student.CurrentModule = (Modules)studentupdate.CurrentModule;
-        if (studentupdate.Password != null)
-            student.Password = studentupdate.Password;
+        if (postUpdate.Content != null)
+            post.Content = postUpdate.Content;
 
-        await _repository.Update(student);
+        await _repository.Update(post);
     }
 
-    public async Task DeleteStudent(int id)
+    public async Task DeletePost(int id)
     {
-        var student = await _repository.GetById<Student>(id);
+        var post = await _repository.GetById<Post>(id);
 
-        if (student == null)
-            throw new StudentNotFound($"Não há aluno com o id {id}");
+        if (post == null)
+            throw new PostNotFound($"There is no post with id {id}");
         
-        await _repository.Delete(student);
+        await _repository.Delete(post);
     }
 }
